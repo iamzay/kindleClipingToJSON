@@ -9,7 +9,7 @@ DataCollector.prototype.collect=function(cliping){
     var record;
 
     // 删除cliping的\n和\r
-    cliping=cliping.replace(/[\n\r]/g,"");
+    cliping=cliping.replace(/[\n\r\ufeff]/g,"");
 
     while((match=pattern.exec(cliping))!==null){
         var meta=this.getTitleAuthor(match[1]);
