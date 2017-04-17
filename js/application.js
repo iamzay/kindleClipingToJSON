@@ -19,6 +19,11 @@ function dragHandler(event){
     var dt=event.dataTransfer;
     var files=dt.files;
 
+    if(/[\s\S]*.txt/.exec(files[0].name)===null){
+        alert("请放入一个txt文件");
+        return;
+    }
+
     processFile(files);
 }
 
