@@ -30,13 +30,15 @@ DataCollector.prototype.collect=function(cliping){
 
 DataCollector.prototype.getPosition=function(positionLine){
     var pattern=/#(\d+)/;
+    var pattern2=/(\d+)/;
     var match=pattern.exec(positionLine);
 
     if(match!==null){
         return match[1];
+    } else{
+        match=pattern2.exec(positionLine);
+        return match===null?"":match[1];
     }
-
-    return "";
 };
 
 DataCollector.prototype.getDate=function(dateLine){
