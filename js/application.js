@@ -32,9 +32,6 @@ function processFile(files){
 
         dataCollector.collect(event.target.result);
 
-        console.log(dataCollector.bookList);
-        console.log(dataCollector.mark);
-
         var jsonCreator=new JsonCreator(dataCollector);
         jsonCreator.create();
     });
@@ -44,5 +41,12 @@ function test(){
     var iframe=document.querySelector("#frmFile");
     var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
 
-    alert(cliping);
+    var dataCollector=new DataCollector();
+    dataCollector.collect(cliping);
+
+    var bookList=dataCollector.bookList,
+        mark=dataCollector.mark;
+
+    console.log(bookList);
+    console.log(mark);
 }

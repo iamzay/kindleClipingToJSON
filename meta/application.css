@@ -17,3 +17,7 @@ body {
     text-align:center;
     line-height: 300px;
 }
+
+#frmFile {
+    display:none;
+}
