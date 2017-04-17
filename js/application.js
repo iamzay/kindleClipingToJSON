@@ -4,6 +4,8 @@ window.onload=function(){
     dropbox.addEventListener("dragenter",removeDefault,false);
     dropbox.addEventListener("dragover",removeDefault,false);
     dropbox.addEventListener("drop",dragHandler,false);
+
+    test();
 };
 
 function removeDefault(event){
@@ -17,10 +19,10 @@ function dragHandler(event){
     var dt=event.dataTransfer;
     var files=dt.files;
 
-    handleFiles(files);
+    processFile(files);
 }
 
-function handleFiles(files){
+function processFile(files){
     var fileReader=new FileReader();
 
     fileReader.readAsText(files[0]);
@@ -32,5 +34,15 @@ function handleFiles(files){
 
         console.log(dataCollector.bookList);
         console.log(dataCollector.mark);
+
+        var jsonCreator=new JsonCreator(dataCollector);
+        jsonCreator.create();
     });
+}
+
+function test(){
+    var iframe=document.querySelector("#frmFile");
+    var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
+
+    alert(cliping);
 }
