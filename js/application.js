@@ -1,57 +1,65 @@
-window.onload=function(){
-    var dropbox=document.querySelector(".dropbox");
+({
+    removeDefault:function(event){
+        event.stopPropagation();
+        event.preventDefault();
+    },
 
-    dropbox.addEventListener("dragenter",removeDefault,false);
-    dropbox.addEventListener("dragover",removeDefault,false);
-    dropbox.addEventListener("drop",dragHandler,false);
+    dragHandler:function(event){
+        removeDefault(event);
 
-    test();
-};
+        var dt=event.dataTransfer;
+        var files=dt.files;
 
-function removeDefault(event){
-    event.stopPropagation();
-    event.preventDefault();
-}
+        if(/[\s\S]*.txt/.exec(files[0].name)===null){
+            alert("请放入一个txt文件");
+            return;
+        }
 
-function dragHandler(event){
-    removeDefault(event);
+        processFile(files);
+    },
 
-    var dt=event.dataTransfer;
-    var files=dt.files;
+    processFile:function(files){
+        var fileReader=new FileReader();
 
-    if(/[\s\S]*.txt/.exec(files[0].name)===null){
-        alert("请放入一个txt文件");
-        return;
-    }
+        fileReader.readAsText(files[0]);
 
-    processFile(files);
-}
+        fileReader.addEventListener("load",function(event){
+            var dataCollector=new DataCollector();
 
-function processFile(files){
-    var fileReader=new FileReader();
+            dataCollector.collect(event.target.result);
 
-    fileReader.readAsText(files[0]);
+            var jsonCreator=new JsonCreator(dataCollector);
+            jsonCreator.create();
+        });
+    },
 
-    fileReader.addEventListener("load",function(event){
+    test:function(){
+        var iframe=document.querySelector("#frmFile");
+        var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
+
         var dataCollector=new DataCollector();
+        dataCollector.collect(cliping);
 
-        dataCollector.collect(event.target.result);
+        var bookList=dataCollector.bookList,
+            mark=dataCollector.mark;
 
-        var jsonCreator=new JsonCreator(dataCollector);
-        jsonCreator.create();
-    });
-}
+        console.log(bookList);
+        console.log(mark);
+    },
 
-function test(){
-    var iframe=document.querySelector("#frmFile");
-    var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
+    init:function(){
+        var removeDefault=this.removeDefault,
+            dragHandler=this.dragHandler,
+            test=this.test;
 
-    var dataCollector=new DataCollector();
-    dataCollector.collect(cliping);
+        window.onload=function(){
+            var dropbox=document.querySelector(".dropbox");
 
-    var bookList=dataCollector.bookList,
-        mark=dataCollector.mark;
+            dropbox.addEventListener("dragenter",removeDefault,false);
+            dropbox.addEventListener("dragover",removeDefault,false);
+            dropbox.addEventListener("drop",dragHandler,false);
 
-    console.log(bookList);
-    console.log(mark);
-}
+            test();
+        };
+    }
+}).init();
