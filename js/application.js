@@ -19,7 +19,7 @@ function dropHandler(event){
 
     removeDefault(event);
 
-    if(/[\s\S]*.txt/.exec(files[0].name)){
+    if(!(/[\s\S]*.txt/.exec(files[0].name))){
         alert('请放入一个txt文件');
         return;
     }
