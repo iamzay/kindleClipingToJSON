@@ -32,11 +32,10 @@ function processFile(file){
 
     fileReader.addEventListener('load',function(event){
         var dataCollector=new DataCollector();
-        var jsonCreator=new JsonCreator(dataCollector);
 
         dataCollector.collect(event.target.result);
 
-        jsonCreator.create();
+        printData(dataCollector);
     });
 
     fileReader.readAsText(file);
@@ -49,6 +48,13 @@ function test(){
 
     dataCollector.collect(cliping);
 
-    console.log(dataCollector.bookList);
-    console.log(dataCollector.mark);
+    printData(dataCollector);
+}
+
+function printData(data){
+    console.log("bookList:");
+    console.log(data.bookList);
+
+    console.log("mark:");
+    console.log(data.mark);
 }
