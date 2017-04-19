@@ -1,4 +1,4 @@
-window.onload=function() {
+ window.onload=function(){
     var dropbox=document.querySelector('.dropbox');
 
     dropbox.addEventListener('dragenter',removeDefault,false);
@@ -8,18 +8,18 @@ window.onload=function() {
     test();
 };
 
-function removeDefault(event) {
+function removeDefault(event){
     event.stopPropagation();
     event.preventDefault();
 }
 
-function dropHandler(event) {
+function dropHandler(event){
     var dt=event.dataTransfer;
     var files=dt.files;
 
     removeDefault(event);
 
-    if (!(/[\s\S]*.txt/.exec(files[0].name))) {
+    if(!(/[\s\S]*.txt/.exec(files[0].name))){
         alert('请放入一个txt文件');
         return;
     }
@@ -27,10 +27,10 @@ function dropHandler(event) {
     processFile(files[0]);
 }
 
-function processFile(file) {
+function processFile(file){
     var fileReader=new FileReader();
 
-    fileReader.addEventListener('load',function(event) {
+    fileReader.addEventListener('load',function(event){
         var dataCollector=new DataCollector();
         var jsonCreator=new JsonCreator(dataCollector);
 
@@ -42,7 +42,7 @@ function processFile(file) {
     fileReader.readAsText(file);
 }
 
-function test() {
+function test(){
     var iframe=document.querySelector('#frmFile');
     var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
     var dataCollector=new DataCollector();
