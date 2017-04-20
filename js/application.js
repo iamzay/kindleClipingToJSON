@@ -32,10 +32,10 @@ function processFile(file){
 
   fileReader.addEventListener('load',function(event){
     var dataCollector=new DataCollector();
-    var jsonCreator=new JsonCreator();
+    var jsonCreator=new JsonCreator(dataCollector);
 
     dataCollector.collect(event.target.result);
-    jsonCreator.create(dataCollector);
+    jsonCreator.create();
     });
 
   fileReader.readAsText(file);
