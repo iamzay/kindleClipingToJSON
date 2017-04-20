@@ -1,60 +1,60 @@
  window.onload=function(){
-    var dropbox=document.querySelector('.dropbox');
+  var dropbox=document.querySelector('.dropbox');
 
-    dropbox.addEventListener('dragenter',removeDefault,false);
-    dropbox.addEventListener('dragover',removeDefault,false);
-    dropbox.addEventListener('drop',dropHandler,false);
+  dropbox.addEventListener('dragenter',removeDefault,false);
+  dropbox.addEventListener('dragover',removeDefault,false);
+  dropbox.addEventListener('drop',dropHandler,false);
 
-    test();
+  test();
 };
 
 function removeDefault(event){
-    event.stopPropagation();
-    event.preventDefault();
+  event.stopPropagation();
+  event.preventDefault();
 }
 
 function dropHandler(event){
-    var dt=event.dataTransfer;
-    var files=dt.files;
+  var dt=event.dataTransfer;
+  var files=dt.files;
 
-    removeDefault(event);
+  removeDefault(event);
 
-    if(!(/[\s\S]*.txt/.exec(files[0].name))){
-        alert('请放入一个txt文件');
-        return;
-    }
+  if(!(/[\s\S]*.txt/.exec(files[0].name))){
+    alert('请放入一个txt文件');
+    return;
+  }
 
-    processFile(files[0]);
+  processFile(files[0]);
 }
 
 function processFile(file){
-    var fileReader=new FileReader();
+  var fileReader=new FileReader();
 
-    fileReader.addEventListener('load',function(event){
-        var dataCollector=new DataCollector();
+  fileReader.addEventListener('load',function(event){
+    var dataCollector=new DataCollector();
 
-        dataCollector.collect(event.target.result);
+    dataCollector.collect(event.target.result);
 
-        printData(dataCollector);
-    });
+    printData(dataCollector);
+  });
 
-    fileReader.readAsText(file);
+  fileReader.readAsText(file);
 }
 
 function test(){
-    var iframe=document.querySelector('#frmFile');
-    var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
-    var dataCollector=new DataCollector();
+  var iframe=document.querySelector('#frmFile');
+  var cliping=iframe.contentWindow.document.body.childNodes[0].innerHTML;
+  var dataCollector=new DataCollector();
 
-    dataCollector.collect(cliping);
+  dataCollector.collect(cliping);
 
-    printData(dataCollector);
+  printData(dataCollector);
 }
 
 function printData(data){
-    console.log("bookList:");
-    console.log(data.bookList);
+  console.log("bookList:");
+  console.log(data.bookList);
 
-    console.log("mark:");
-    console.log(data.mark);
+  console.log("mark:");
+  console.log(data.mark);
 }
