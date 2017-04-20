@@ -32,11 +32,11 @@ function processFile(file){
 
   fileReader.addEventListener('load',function(event){
     var dataCollector=new DataCollector();
+    var jsonCreator=new JsonCreator();
 
     dataCollector.collect(event.target.result);
-
-    printData(dataCollector);
-  });
+    jsonCreator.create(dataCollector);
+    });
 
   fileReader.readAsText(file);
 }
