@@ -167,6 +167,8 @@ DataCollector.prototype.getContent=function(contentLine){
 DataCollector.prototype.getTitleAuthor=function(titleLine){
   var cnt=1;
   var len=titleLine.length;
+  var pattern=/([\s\S]*?) \(([\s\S]*)\)/;
+  var match;
   var i;
   var j;
 
@@ -180,6 +182,21 @@ DataCollector.prototype.getTitleAuthor=function(titleLine){
       --cnt;
     }
   }
+
+    if(cnt){
+        match=pattern.exec(titleLine);
+
+        if(match){
+            return {
+                title:match[1],
+                author:match[2]
+            };
+        }
+        return {
+            title:titleLine,
+            author:""
+        };
+    }
 
   return {
     title:titleLine.slice(0,i),

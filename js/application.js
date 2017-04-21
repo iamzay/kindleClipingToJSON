@@ -1,4 +1,4 @@
- window.onload=function(){
+window.onload=function(){
   var dropbox=document.querySelector('.dropbox');
 
   dropbox.addEventListener('dragenter',removeDefault,false);
